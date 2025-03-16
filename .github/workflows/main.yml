@@ -8,21 +8,21 @@ jobs:
   build:
     runs-on: ubuntu-latest # 使用的运行器类型
     steps:
-      - name: Checkout code
+      - name: 拉取代码
         uses: actions/checkout@v4 # 拉取代码
 
-      - name: Set up Node.js
+      - name: 安装NODEJS
         uses: actions/setup-node@v4
         with:
           node-version: "20" # 设置 Node.js 版本
 
-      - name: Install dependencies
+      - name: 安装依赖
         run: npm install # 安装依赖
 
-      - name: Build project
+      - name: 打包项目
         run: npm run build # 打包项目
 
-      - name: Upload build artifacts
+      - name: 下载构建产物
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts # 构建产物的名称
