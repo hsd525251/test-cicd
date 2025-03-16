@@ -21,3 +21,9 @@ jobs:
 
       - name: Build project
         run: npm run build # 打包项目
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts # 构建产物的名称
+          path: ./dist # 打包文件所在的目录，根据项目实际情况修改
