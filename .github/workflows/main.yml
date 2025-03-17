@@ -14,7 +14,7 @@ jobs:
       - name: 安装NODEJS
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # 设置 Node.js 版本
+          node-version: '20' # 设置 Node.js 版本
 
       - name: 安装依赖
         run: npm install # 安装依赖
@@ -27,3 +27,21 @@ jobs:
         with:
           name: build-artifacts # 构建产物的名称
           path: ./dist # 打包文件所在的目录，根据项目实际情况修改
+  # 部署任务（依赖构建）
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build # 必须等待build任务完成
+    steps:
+      - name: 下载构建产物
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./dist # 下载到相同目录结构
+
+      - name: 部署到GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          publish_dir: ./dist # 必须与下载路径一致
+          publish_branch: gh-pages
+          force_orphan: true
